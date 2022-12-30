@@ -1,4 +1,31 @@
-#new code for sampling
+import pandas as pd
+from datetime import datetime, date
 
-print('hello world')
-print('nebiyu')
+#add date time stamps
+df = pd.read_excel('Sample1.xlsx')
+
+date_list = []
+for i in range(0,len(df),1):
+    current_time = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    date_list.append(current_time)
+    
+df['Date Time Stamp'] = date_list
+
+######use state
+xls = pd.ExcelFile('your directory.xlsx')
+df1 = pd.read_excel(xls, 'General Listings Info')
+df1.head()
+state_list = []
+for i in df1['Airbnb Listing Address']:
+    state = i.split(',')
+    state_list.append(state[1])
+df1['State'] = state_list
+
+#### how to add year to the monthly bookings and price
+xls = pd.ExcelFile('Sample1.xlsx')
+df1 = pd.read_excel(xls, 'Monthly Bookings')
+df2 = pd.read_excel(xls, 'General Listings Info')
+df2.head()
+df1['year'] = pd.DatetimeIndex(df2['Date Time Stapm']).year
+    
+
